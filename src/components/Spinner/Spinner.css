@@ -1,0 +1,45 @@
+/* ===== Spinner ===== */
+.gl-spinner {
+  --_spinner-size: 1.5rem;
+  --_spinner-bw: 2px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_spinner-size);
+  height: var(--_spinner-size);
+  color: inherit;
+  vertical-align: middle;
+  flex: none;
+}
+
+/* The rotating ring — a full circle with a transparent top edge so the
+   gap reads as motion once it spins. Only `transform` animates (GPU). */
+.gl-spinner__ring {
+  width: 100%;
+  height: 100%;
+  border: var(--gl-spinner-bw, var(--_spinner-bw)) solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--gl-radius-full);
+  opacity: 0.9;
+  animation: gl-spin 0.7s linear infinite;
+  will-change: transform;
+}
+
+/* ---- Sizes ---- */
+.gl-spinner--sm {
+  --_spinner-size: 1rem;
+  --_spinner-bw: 2px;
+}
+.gl-spinner--md {
+  --_spinner-size: 1.5rem;
+  --_spinner-bw: 2px;
+}
+.gl-spinner--lg {
+  --_spinner-size: 2.25rem;
+  --_spinner-bw: 3px;
+}
+.gl-spinner--xl {
+  --_spinner-size: 3rem;
+  --_spinner-bw: 4px;
+}

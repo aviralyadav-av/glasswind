@@ -1,0 +1,153 @@
+/* ===== Drawer ===== */
+.gl-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--gl-z-drawer);
+}
+
+/* ---- Backdrop scrim ---- */
+.gl-drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: gl-fade-in var(--gl-dur) var(--gl-ease) both;
+}
+
+/* ---- Panel (frosted glass, pinned to an edge) ---- */
+.gl-drawer__panel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  font-family: var(--gl-font);
+  font-size: var(--gl-fs);
+  line-height: var(--gl-lh);
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg);
+  border: 1px solid var(--gl-border);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-shadow-lg), var(--gl-inner-glow);
+  outline: none;
+  will-change: transform;
+  animation-duration: var(--gl-dur);
+  animation-timing-function: var(--gl-ease);
+  animation-fill-mode: both;
+}
+
+/* Graceful fallback where backdrop-filter is unsupported. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .gl-drawer__panel {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  [data-theme='dark'] .gl-drawer__panel,
+  .gl-dark .gl-drawer__panel {
+    background: rgba(28, 28, 36, 0.94);
+  }
+}
+
+/* ---- Sides: left / right span full height ---- */
+.gl-drawer__panel--left,
+.gl-drawer__panel--right {
+  top: 0;
+  height: 100%;
+}
+.gl-drawer__panel--left {
+  left: 0;
+  border-top-right-radius: var(--gl-radius-lg);
+  border-bottom-right-radius: var(--gl-radius-lg);
+  animation-name: gl-slide-in-left;
+}
+.gl-drawer__panel--right {
+  right: 0;
+  border-top-left-radius: var(--gl-radius-lg);
+  border-bottom-left-radius: var(--gl-radius-lg);
+  animation-name: gl-slide-in-right;
+}
+
+/* ---- Sides: top / bottom span full width ---- */
+.gl-drawer__panel--top,
+.gl-drawer__panel--bottom {
+  left: 0;
+  width: 100%;
+}
+.gl-drawer__panel--top {
+  top: 0;
+  border-bottom-left-radius: var(--gl-radius-lg);
+  border-bottom-right-radius: var(--gl-radius-lg);
+  animation-name: gl-slide-in-top;
+}
+.gl-drawer__panel--bottom {
+  bottom: 0;
+  border-top-left-radius: var(--gl-radius-lg);
+  border-top-right-radius: var(--gl-radius-lg);
+  animation-name: gl-slide-in-bottom;
+}
+
+/* ---- Sections ---- */
+.gl-drawer__header,
+.gl-drawer__footer {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--gl-space-4);
+}
+
+.gl-drawer__header {
+  padding: var(--gl-space-5) var(--gl-space-6);
+  border-bottom: 1px solid var(--gl-border);
+}
+
+.gl-drawer__title {
+  margin: 0;
+  font-size: var(--gl-fs-lg);
+  font-weight: var(--gl-fw-bold);
+  line-height: 1.25;
+  color: var(--gl-text);
+}
+
+.gl-drawer__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--gl-space-6);
+}
+
+.gl-drawer__footer {
+  justify-content: flex-end;
+  gap: var(--gl-space-3);
+  padding: var(--gl-space-5) var(--gl-space-6);
+  border-top: 1px solid var(--gl-border);
+}
+
+/* ---- Close button ---- */
+.gl-drawer__close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: auto;
+  width: var(--gl-control-h-sm);
+  height: var(--gl-control-h-sm);
+  padding: 0;
+  cursor: pointer;
+  color: var(--gl-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--gl-radius-full);
+  transition:
+    transform var(--gl-dur-fast) var(--gl-ease),
+    color var(--gl-dur) var(--gl-ease),
+    background-color var(--gl-dur) var(--gl-ease);
+}
+.gl-drawer__close:hover {
+  color: var(--gl-text);
+  background: var(--gl-bg-subtle);
+}
+.gl-drawer__close:active {
+  transform: scale(0.94);
+}

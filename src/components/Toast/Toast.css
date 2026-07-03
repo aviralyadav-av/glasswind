@@ -1,0 +1,173 @@
+/* ===== Toast ===== */
+
+/* ---- Viewport: fixed stack anchored to a screen corner ---- */
+.gl-toast-viewport {
+  position: fixed;
+  z-index: var(--gl-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gl-space-3);
+  width: min(24rem, calc(100vw - (var(--gl-space-5) * 2)));
+  /* The stack itself is inert; only individual toasts capture pointer events,
+     so the empty area of the viewport never blocks clicks underneath. */
+  pointer-events: none;
+}
+
+/* Top corners: newest toast sits nearest the top edge and pushes older ones down. */
+.gl-toast-viewport--top-right {
+  top: var(--gl-space-5);
+  right: var(--gl-space-5);
+  flex-direction: column-reverse;
+}
+.gl-toast-viewport--top-left {
+  top: var(--gl-space-5);
+  left: var(--gl-space-5);
+  flex-direction: column-reverse;
+}
+/* Bottom corners: newest toast sits nearest the bottom edge. */
+.gl-toast-viewport--bottom-right {
+  bottom: var(--gl-space-5);
+  right: var(--gl-space-5);
+}
+.gl-toast-viewport--bottom-left {
+  bottom: var(--gl-space-5);
+  left: var(--gl-space-5);
+}
+
+/* ---- Toast card: frosted glass surface ---- */
+.gl-toast {
+  /* Accent color for the leading bar (overridden per variant). */
+  --_toast-accent: var(--gl-border-strong);
+
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gl-space-3);
+  width: 100%;
+  padding: var(--gl-space-4);
+  overflow: hidden;
+  pointer-events: auto;
+  font-family: var(--gl-font);
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  animation: gl-toast-in var(--gl-dur) var(--gl-ease);
+  will-change: transform, opacity;
+}
+
+/* Top-edge sheen — the subtle highlight that sells the glass look. */
+.gl-toast::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Graceful fallback where backdrop-filter is unsupported: use a more opaque
+   solid so the text stays readable. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .gl-toast {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  [data-theme='dark'] .gl-toast,
+  .gl-dark .gl-toast {
+    background: rgba(28, 28, 36, 0.94);
+  }
+}
+
+/* ---- Variant accents ---- */
+.gl-toast--glass {
+  --_toast-accent: var(--gl-border-strong);
+}
+.gl-toast--success {
+  --_toast-accent: var(--gl-success);
+}
+.gl-toast--danger {
+  --_toast-accent: var(--gl-danger);
+}
+.gl-toast--warning {
+  --_toast-accent: var(--gl-warning);
+}
+.gl-toast--info {
+  --_toast-accent: var(--gl-info);
+}
+
+/* ---- Sub-elements ---- */
+.gl-toast__accent {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: var(--_toast-accent);
+  pointer-events: none;
+}
+
+.gl-toast__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--gl-space-1);
+  min-width: 0;
+  padding-left: var(--gl-space-1);
+}
+
+.gl-toast__title {
+  font-size: var(--gl-fs);
+  font-weight: var(--gl-fw-bold);
+  line-height: var(--gl-lh);
+  color: var(--gl-text);
+}
+
+.gl-toast__description {
+  font-size: var(--gl-fs-sm);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+  color: var(--gl-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.gl-toast__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: -2px -2px 0 0;
+  padding: 0;
+  color: var(--gl-text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--gl-radius-sm);
+  cursor: pointer;
+  transition:
+    transform var(--gl-dur-fast) var(--gl-ease),
+    color var(--gl-dur-fast) var(--gl-ease),
+    background-color var(--gl-dur-fast) var(--gl-ease);
+}
+.gl-toast__close:hover {
+  color: var(--gl-text);
+  background: var(--gl-bg-subtle);
+}
+.gl-toast__close:active {
+  transform: scale(0.92);
+}
+
+.gl-toast__close-icon {
+  width: 16px;
+  height: 16px;
+}

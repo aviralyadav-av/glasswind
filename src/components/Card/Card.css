@@ -1,0 +1,93 @@
+/* ===== Card ===== */
+.gl-card {
+  --_card-pad: var(--gl-space-6);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--gl-text-on-glass);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-lg);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  transition:
+    transform var(--gl-dur) var(--gl-ease),
+    border-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease);
+}
+
+/* Top-edge sheen — the subtle highlight that sells the glass look */
+.gl-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ---- Variants ---- */
+.gl-card--glass {
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+}
+
+.gl-card--solid {
+  background: var(--gl-bg-subtle);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* ---- Padding (drives the shared --_card-pad token) ---- */
+.gl-card--pad-none {
+  --_card-pad: 0px;
+}
+.gl-card--pad-sm {
+  --_card-pad: var(--gl-space-3);
+}
+.gl-card--pad-md {
+  --_card-pad: var(--gl-space-4);
+}
+.gl-card--pad-lg {
+  --_card-pad: var(--gl-space-6);
+}
+
+/* ---- Hover lift ---- */
+.gl-card--hoverable {
+  cursor: pointer;
+  will-change: transform;
+}
+.gl-card--hoverable:hover {
+  transform: translateY(-4px);
+  border-color: var(--gl-border-strong);
+  box-shadow: var(--gl-shadow-lg), var(--gl-inner-glow);
+}
+
+/* ---- Sections ---- */
+.gl-card__header,
+.gl-card__body,
+.gl-card__footer {
+  position: relative;
+  padding: var(--_card-pad);
+}
+
+.gl-card__header {
+  border-bottom: 1px solid var(--gl-border);
+}
+
+.gl-card__footer {
+  border-top: 1px solid var(--gl-border);
+}
+
+.gl-card__body {
+  flex: 1 1 auto;
+  min-height: 0;
+}

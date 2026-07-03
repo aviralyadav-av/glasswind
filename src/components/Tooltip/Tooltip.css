@@ -1,0 +1,94 @@
+/* ===== Tooltip ===== */
+.gl-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.gl-tooltip {
+  position: absolute;
+  z-index: var(--gl-z-tooltip);
+  max-width: 240px;
+  width: max-content;
+  padding: var(--gl-space-2) var(--gl-space-3);
+  font-family: var(--gl-font);
+  font-size: var(--gl-fs-sm);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+  text-align: center;
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-sm);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  pointer-events: none;
+  animation-duration: var(--gl-dur);
+  animation-timing-function: var(--gl-ease);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+}
+
+/* ---- Placements ----
+   Each placement keeps a static centering transform and folds a fade+scale-in
+   into its own keyframe so only transform & opacity animate (GPU compositor). */
+.gl-tooltip--top {
+  bottom: calc(100% + var(--gl-space-2));
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  transform-origin: bottom center;
+  animation-name: gl-tooltip-in-x;
+}
+.gl-tooltip--bottom {
+  top: calc(100% + var(--gl-space-2));
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  transform-origin: top center;
+  animation-name: gl-tooltip-in-x;
+}
+.gl-tooltip--left {
+  right: calc(100% + var(--gl-space-2));
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  transform-origin: center right;
+  animation-name: gl-tooltip-in-y;
+}
+.gl-tooltip--right {
+  left: calc(100% + var(--gl-space-2));
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  transform-origin: center left;
+  animation-name: gl-tooltip-in-y;
+}
+
+@keyframes gl-tooltip-in-x {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+@keyframes gl-tooltip-in-y {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* Graceful fallback where backdrop-filter is unsupported. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .gl-tooltip {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  [data-theme='dark'] .gl-tooltip,
+  .gl-dark .gl-tooltip {
+    background: rgba(28, 28, 36, 0.94);
+  }
+}

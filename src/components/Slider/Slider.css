@@ -1,0 +1,180 @@
+/* ===== Slider ===== */
+.gl-slider {
+  /* Filled fraction as a percentage — set inline from the component and
+     inherited by the input + its ::track / ::thumb pseudo-elements. */
+  --gl-slider-fill: 0%;
+  --_track-h: 6px;
+  --_thumb: 20px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  min-width: 140px;
+  height: var(--gl-control-h-md);
+  font-family: var(--gl-font);
+}
+
+/* Reserve headroom so the persistent value bubble never clips its neighbour. */
+.gl-slider--show-value {
+  margin-top: var(--gl-space-8);
+}
+
+/* ---- Native input reset ---- */
+.gl-slider__input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: var(--_thumb);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--gl-radius-full);
+}
+.gl-slider__input:focus {
+  outline: none;
+}
+.gl-slider__input::-moz-focus-outer {
+  border: 0;
+}
+
+/* ---- Track (WebKit/Blink) ---- */
+.gl-slider__input::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  height: var(--_track-h);
+  border-radius: var(--gl-radius-full);
+  background: linear-gradient(
+    to right,
+    var(--gl-primary),
+    var(--gl-primary) var(--gl-slider-fill),
+    var(--gl-bg-subtle) var(--gl-slider-fill),
+    var(--gl-bg-subtle)
+  );
+  box-shadow: inset 0 0 0 1px var(--gl-border);
+}
+
+/* ---- Track (Firefox) ---- */
+.gl-slider__input::-moz-range-track {
+  box-sizing: border-box;
+  height: var(--_track-h);
+  border-radius: var(--gl-radius-full);
+  background: linear-gradient(
+    to right,
+    var(--gl-primary),
+    var(--gl-primary) var(--gl-slider-fill),
+    var(--gl-bg-subtle) var(--gl-slider-fill),
+    var(--gl-bg-subtle)
+  );
+  box-shadow: inset 0 0 0 1px var(--gl-border);
+}
+
+/* ---- Thumb (WebKit/Blink) — glass circle ---- */
+.gl-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--_thumb);
+  height: var(--_thumb);
+  /* Centre the larger thumb over the thin track. */
+  margin-top: calc((var(--_track-h) - var(--_thumb)) / 2);
+  border: 1px solid var(--gl-border-strong);
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  cursor: grab;
+  transition:
+    transform var(--gl-dur-fast) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease);
+  will-change: transform;
+}
+
+/* ---- Thumb (Firefox) — glass circle ---- */
+.gl-slider__input::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--_thumb);
+  height: var(--_thumb);
+  border: 1px solid var(--gl-border-strong);
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  cursor: grab;
+  transition:
+    transform var(--gl-dur-fast) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease);
+  will-change: transform;
+}
+
+/* ---- Hover / active thumb scale (GPU-only transform) ---- */
+.gl-slider__input:hover::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+.gl-slider__input:active::-webkit-slider-thumb {
+  transform: scale(1.04);
+  cursor: grabbing;
+}
+.gl-slider__input:hover::-moz-range-thumb {
+  transform: scale(1.12);
+}
+.gl-slider__input:active::-moz-range-thumb {
+  transform: scale(1.04);
+  cursor: grabbing;
+}
+
+/* ---- Keyboard focus ring on the thumb ---- */
+.gl-slider__input:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow), var(--gl-ring);
+}
+.gl-slider__input:focus-visible::-moz-range-thumb {
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow), var(--gl-ring);
+}
+
+/* ---- Value bubble ---- */
+.gl-slider__value {
+  position: absolute;
+  left: var(--gl-slider-fill);
+  bottom: 50%;
+  margin-bottom: calc(var(--_thumb) / 2 + var(--gl-space-2));
+  transform: translateX(-50%);
+  min-width: 2ch;
+  padding: var(--gl-space-1) var(--gl-space-2);
+  font-size: var(--gl-fs-xs);
+  font-weight: var(--gl-fw-bold);
+  line-height: 1;
+  text-align: center;
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-sm);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ---- Disabled ---- */
+.gl-slider--disabled {
+  opacity: 0.5;
+}
+.gl-slider--disabled .gl-slider__input,
+.gl-slider--disabled .gl-slider__input::-webkit-slider-thumb {
+  cursor: not-allowed;
+}
+.gl-slider--disabled .gl-slider__input::-moz-range-thumb {
+  cursor: not-allowed;
+}
+
+/* ---- Reduced motion: also quiet the pseudo-element transitions ---- */
+@media (prefers-reduced-motion: reduce) {
+  .gl-slider__input::-webkit-slider-thumb {
+    transition-duration: 0.01ms;
+  }
+  .gl-slider__input::-moz-range-thumb {
+    transition-duration: 0.01ms;
+  }
+}

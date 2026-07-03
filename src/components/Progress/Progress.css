@@ -1,0 +1,111 @@
+/* ===== Progress ===== */
+.gl-progress {
+  --_track-h: 10px;
+  --_fill: var(--gl-primary);
+
+  display: flex;
+  align-items: center;
+  gap: var(--gl-space-3);
+  width: 100%;
+  font-family: var(--gl-font);
+}
+
+/* ---- Sizes ---- */
+.gl-progress--sm {
+  --_track-h: 6px;
+}
+.gl-progress--md {
+  --_track-h: 10px;
+}
+.gl-progress--lg {
+  --_track-h: 14px;
+}
+
+/* ---- Colors ---- */
+.gl-progress--primary {
+  --_fill: var(--gl-primary);
+}
+.gl-progress--success {
+  --_fill: var(--gl-success);
+}
+.gl-progress--danger {
+  --_fill: var(--gl-danger);
+}
+.gl-progress--warning {
+  --_fill: var(--gl-warning);
+}
+.gl-progress--info {
+  --_fill: var(--gl-info);
+}
+
+/* ---- Track: glass subtle rounded bar ---- */
+.gl-progress__track {
+  position: relative;
+  flex: 1 1 auto;
+  height: var(--_track-h);
+  overflow: hidden;
+  background: var(--gl-bg-subtle);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-full);
+  box-shadow: var(--gl-inner-glow);
+}
+
+/* ---- Determinate fill: GPU-friendly scaleX reveal ---- */
+.gl-progress__bar {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform: scaleX(var(--gl-progress-value, 0));
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--_fill) 82%, white 18%),
+    var(--_fill)
+  );
+  transition: transform var(--gl-dur) var(--gl-ease);
+  will-change: transform;
+}
+
+/* Top-edge sheen that sells the glass gloss on the fill */
+.gl-progress__bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 55%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ---- Indeterminate fill: looping partial sweep ---- */
+.gl-progress__bar--indeterminate {
+  right: auto;
+  width: 40%;
+  transform: none;
+  transition: none;
+  animation: gl-indeterminate 1.4s var(--gl-ease) infinite;
+}
+
+/* ---- Percentage label ---- */
+.gl-progress__label {
+  flex: 0 0 auto;
+  min-width: 3ch;
+  font-size: var(--gl-fs-sm);
+  font-weight: var(--gl-fw-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--gl-text-muted);
+  text-align: right;
+}
+
+/* ---- Reduced motion: keep the indeterminate state visible without sweeping ---- */
+@media (prefers-reduced-motion: reduce) {
+  .gl-progress__bar--indeterminate {
+    left: 0;
+    right: 0;
+    width: auto;
+    transform: none;
+    opacity: 0.6;
+  }
+}

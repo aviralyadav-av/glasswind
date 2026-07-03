@@ -1,0 +1,16 @@
+# Source & config — only ship the built dist/
+src/
+playground/
+docs/
+node_modules/
+
+tsconfig.json
+tsup.config.ts
+vite.config.ts
+.gitignore
+.editorconfig
+
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

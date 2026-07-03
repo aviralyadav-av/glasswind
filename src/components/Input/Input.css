@@ -1,0 +1,165 @@
+/* ===== Input ===== */
+.gl-input {
+  --_input-h: var(--gl-control-h-md);
+  --_input-px: var(--gl-space-4);
+  --_input-fs: var(--gl-fs);
+  --_input-radius: var(--gl-radius);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gl-space-2);
+  height: var(--_input-h);
+  padding: 0 var(--_input-px);
+  font-family: var(--gl-font);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--_input-radius);
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg-subtle);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-inner-glow);
+  cursor: text;
+  transition:
+    border-color var(--gl-dur) var(--gl-ease),
+    background-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease);
+}
+
+/* Top-edge sheen — the subtle highlight that sells the glass look */
+.gl-input::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.gl-input:hover {
+  border-color: var(--gl-border-strong);
+}
+
+/* Wrapper carries the focus ring so icons + field feel like one control */
+.gl-input:focus-within {
+  border-color: var(--gl-border-strong);
+  box-shadow: var(--gl-ring), var(--gl-inner-glow);
+}
+
+/* ---- Variants ---- */
+.gl-input--subtle {
+  background: var(--gl-bg-subtle);
+}
+.gl-input--glass {
+  background: var(--gl-bg);
+  border-color: var(--gl-border);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+}
+.gl-input--glass:focus-within {
+  box-shadow: var(--gl-ring), var(--gl-shadow), var(--gl-inner-glow);
+}
+
+/* ---- Sizes ---- */
+.gl-input--md {
+  --_input-h: var(--gl-control-h-md);
+  --_input-px: var(--gl-space-4);
+  --_input-fs: var(--gl-fs);
+  --_input-radius: var(--gl-radius);
+}
+.gl-input--sm {
+  --_input-h: var(--gl-control-h-sm);
+  --_input-px: var(--gl-space-3);
+  --_input-fs: var(--gl-fs-sm);
+  --_input-radius: var(--gl-radius-sm);
+  gap: var(--gl-space-1);
+}
+.gl-input--lg {
+  --_input-h: var(--gl-control-h-lg);
+  --_input-px: var(--gl-space-5);
+  --_input-fs: var(--gl-fs-lg);
+  --_input-radius: var(--gl-radius-lg);
+}
+
+/* ---- Error ---- */
+.gl-input--error {
+  border-color: var(--gl-danger);
+}
+.gl-input--error:hover {
+  border-color: var(--gl-danger);
+}
+.gl-input--error:focus-within {
+  border-color: var(--gl-danger);
+  box-shadow: 0 0 0 3px var(--gl-danger-soft), var(--gl-inner-glow);
+}
+
+/* ---- Layout ---- */
+.gl-input--block {
+  display: flex;
+  width: 100%;
+}
+
+/* ---- Disabled ---- */
+.gl-input--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.gl-input--disabled .gl-input__field {
+  cursor: not-allowed;
+}
+
+/* ---- Field ---- */
+.gl-input__field {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--_input-fs);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+  text-overflow: ellipsis;
+}
+.gl-input__field::placeholder {
+  color: var(--gl-text-faint);
+  opacity: 1;
+}
+.gl-input__field:disabled {
+  cursor: not-allowed;
+}
+/* Kill the UA number spinners for a clean glass field */
+.gl-input__field::-webkit-outer-spin-button,
+.gl-input__field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ---- Icons ---- */
+.gl-input__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--gl-text-muted);
+  font-size: 1.1em;
+  pointer-events: none;
+}
+/* Optically tuck each adornment toward its padding edge */
+.gl-input__icon--left {
+  margin-inline-start: calc(-1 * var(--gl-space-1));
+}
+.gl-input__icon--right {
+  margin-inline-end: calc(-1 * var(--gl-space-1));
+}

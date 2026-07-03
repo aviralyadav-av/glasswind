@@ -1,0 +1,105 @@
+/* ===== Textarea ===== */
+.gl-textarea {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 12rem;
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius);
+  background: var(--gl-bg-subtle);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  color: var(--gl-text-on-glass);
+  transition:
+    border-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease),
+    background-color var(--gl-dur) var(--gl-ease);
+}
+
+/* Top-edge sheen — the subtle highlight that sells the glass look */
+.gl-textarea::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ---- Variants ---- */
+.gl-textarea--glass {
+  background: var(--gl-bg);
+}
+.gl-textarea--subtle {
+  background: var(--gl-bg-subtle);
+}
+
+/* ---- States ---- */
+.gl-textarea:focus-within {
+  border-color: var(--gl-border-strong);
+  box-shadow: var(--gl-ring), var(--gl-shadow), var(--gl-inner-glow);
+}
+
+.gl-textarea--error {
+  border-color: var(--gl-danger);
+}
+.gl-textarea--error:focus-within {
+  border-color: var(--gl-danger);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--gl-danger) 40%, transparent),
+    var(--gl-shadow),
+    var(--gl-inner-glow);
+}
+
+.gl-textarea--full {
+  display: flex;
+  width: 100%;
+}
+
+.gl-textarea--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---- Field ---- */
+.gl-textarea__field {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: calc(var(--gl-fs) * var(--gl-lh) * 3);
+  margin: 0;
+  padding: var(--gl-space-3) var(--gl-space-4);
+  font-family: var(--gl-font);
+  font-size: var(--gl-fs);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+  outline: none;
+  resize: vertical;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.gl-textarea__field::placeholder {
+  color: var(--gl-text-faint);
+}
+
+.gl-textarea__field:disabled {
+  cursor: not-allowed;
+}
+
+/* Auto-resize takes over height, so drop the manual handle and the scrollbar. */
+.gl-textarea--auto .gl-textarea__field {
+  resize: none;
+  overflow: hidden;
+}

@@ -1,0 +1,156 @@
+/* ===== Checkbox ===== */
+.gl-checkbox {
+  --_box: 20px;
+  --_accent: var(--gl-primary);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gl-space-2);
+  font-family: var(--gl-font);
+  font-size: var(--gl-fs);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+  color: var(--gl-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ---- Sizes ---- */
+.gl-checkbox--sm {
+  --_box: 16px;
+  font-size: var(--gl-fs-sm);
+}
+.gl-checkbox--lg {
+  --_box: 24px;
+  font-size: var(--gl-fs-lg);
+}
+
+/* ---- The glass box ---- */
+.gl-checkbox__box {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_box);
+  height: var(--_box);
+  color: var(--gl-primary-contrast);
+  background: var(--gl-bg-subtle);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-sm);
+  box-shadow: var(--gl-inner-glow);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  transition:
+    background-color var(--gl-dur) var(--gl-ease),
+    border-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease),
+    transform var(--gl-dur-fast) var(--gl-ease);
+  will-change: transform;
+}
+
+/* Top-edge sheen — the highlight that sells the glass look */
+.gl-checkbox__box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.gl-checkbox:hover .gl-checkbox__box {
+  border-color: var(--gl-border-strong);
+  background: var(--gl-bg);
+}
+.gl-checkbox:active .gl-checkbox__box {
+  transform: scale(0.92);
+}
+
+/* ---- Check mark ---- */
+.gl-checkbox__check {
+  width: 72%;
+  height: 72%;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--gl-dur-fast) var(--gl-ease),
+    transform var(--gl-dur) var(--gl-ease-spring);
+}
+
+/* ---- Indeterminate dash ---- */
+.gl-checkbox__dash {
+  position: absolute;
+  width: 56%;
+  height: 2px;
+  border-radius: var(--gl-radius-full);
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition:
+    opacity var(--gl-dur-fast) var(--gl-ease),
+    transform var(--gl-dur) var(--gl-ease-spring);
+}
+
+/* ---- Selected (checked) ---- */
+.gl-checkbox__input:checked + .gl-checkbox__box {
+  background: var(--_accent);
+  border-color: var(--_accent);
+}
+.gl-checkbox__input:checked + .gl-checkbox__box .gl-checkbox__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- Indeterminate (wins over checked for the visible mark) ---- */
+.gl-checkbox__input:indeterminate + .gl-checkbox__box {
+  background: var(--_accent);
+  border-color: var(--_accent);
+}
+.gl-checkbox__input:indeterminate + .gl-checkbox__box .gl-checkbox__check {
+  opacity: 0;
+  transform: scale(0.6);
+}
+.gl-checkbox__input:indeterminate + .gl-checkbox__box .gl-checkbox__dash {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* ---- Error ---- */
+.gl-checkbox--error {
+  --_accent: var(--gl-danger);
+}
+.gl-checkbox--error .gl-checkbox__box {
+  border-color: var(--gl-danger);
+}
+.gl-checkbox--error .gl-checkbox__label {
+  color: var(--gl-danger);
+}
+
+/* ---- Focus ring (driven by the hidden input's focus state) ---- */
+.gl-checkbox__input:focus-visible + .gl-checkbox__box {
+  outline: none;
+  box-shadow: var(--gl-ring);
+}
+
+/* ---- Disabled ---- */
+.gl-checkbox--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.gl-checkbox--disabled .gl-checkbox__box {
+  transform: none;
+}
+
+/* ---- Label ---- */
+.gl-checkbox__label {
+  display: inline-block;
+}

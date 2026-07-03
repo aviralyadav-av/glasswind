@@ -1,0 +1,75 @@
+{
+  "name": "glasswind",
+  "version": "0.1.1",
+  "description": "Glasswind — a glassmorphism React component library. Beautiful frosted-glass UI components with smooth, GPU-accelerated animations for React & Next.js.",
+  "keywords": [
+    "glasswind",
+    "react",
+    "ui",
+    "components",
+    "glassmorphism",
+    "glass",
+    "glass-ui",
+    "design-system",
+    "nextjs",
+    "frosted-glass",
+    "component-library",
+    "tailwind-alternative"
+  ],
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://github.com/your-username/glasswind#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/glasswind.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/glasswind/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/styles.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

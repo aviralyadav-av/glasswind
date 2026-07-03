@@ -1,0 +1,120 @@
+/* ===== Switch ===== */
+.gl-switch {
+  /* Track/thumb geometry — sizes only override width, height & font. */
+  --_sw-w: 44px;
+  --_sw-h: 26px;
+  --_sw-pad: 3px;
+  --_sw-thumb: calc(var(--_sw-h) - var(--_sw-pad) * 2);
+  --_sw-travel: calc(var(--_sw-w) - var(--_sw-thumb) - var(--_sw-pad) * 2);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gl-space-3);
+  font-family: var(--gl-font);
+  font-size: var(--gl-fs);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+  color: var(--gl-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ---- Sizes ---- */
+.gl-switch--sm {
+  --_sw-w: 34px;
+  --_sw-h: 20px;
+  font-size: var(--gl-fs-sm);
+}
+.gl-switch--md {
+  --_sw-w: 44px;
+  --_sw-h: 26px;
+  font-size: var(--gl-fs);
+}
+.gl-switch--lg {
+  --_sw-w: 54px;
+  --_sw-h: 32px;
+  font-size: var(--gl-fs-lg);
+}
+
+/* ---- Track (glass surface) ---- */
+.gl-switch__track {
+  position: relative;
+  flex: none;
+  width: var(--_sw-w);
+  height: var(--_sw-h);
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-bg-subtle);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  border: 1px solid var(--gl-border);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  transition:
+    background-color var(--gl-dur) var(--gl-ease),
+    border-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease);
+}
+
+/* Top-edge sheen — the subtle highlight that sells the glass look */
+.gl-switch__track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ---- Thumb ---- */
+.gl-switch__thumb {
+  position: absolute;
+  top: var(--_sw-pad);
+  left: var(--_sw-pad);
+  width: var(--_sw-thumb);
+  height: var(--_sw-thumb);
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-primary-contrast);
+  box-shadow: var(--gl-shadow);
+  transform: translateX(0);
+  transition: transform var(--gl-dur) var(--gl-ease-spring);
+  will-change: transform;
+}
+
+/* ---- Hover ---- */
+.gl-switch:hover:not(.gl-switch--disabled) .gl-switch__track {
+  background: var(--gl-bg-hover);
+}
+
+/* ---- Checked ---- */
+.gl-switch--checked .gl-switch__track {
+  background: var(--gl-primary);
+  border-color: color-mix(in srgb, var(--gl-primary) 70%, black 30%);
+}
+.gl-switch--checked:hover:not(.gl-switch--disabled) .gl-switch__track {
+  background: var(--gl-primary-hover);
+}
+.gl-switch--checked .gl-switch__thumb {
+  transform: translateX(var(--_sw-travel));
+}
+
+/* ---- Focus ring on the track (input is visually hidden) ---- */
+.gl-switch__input:focus-visible + .gl-switch__track {
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow), var(--gl-ring);
+}
+
+/* ---- Disabled ---- */
+.gl-switch--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ---- Label ---- */
+.gl-switch__label {
+  color: var(--gl-text);
+}

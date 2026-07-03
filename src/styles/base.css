@@ -1,0 +1,133 @@
+/* ============================================================
+   Glasswind — Base layer
+   Shared glass surface utility, focus ring, shared keyframes,
+   and reduced-motion handling. Component CSS builds on top.
+   ============================================================ */
+
+/* ---- Core frosted-glass surface ----
+   Add `gl-glass` to any element to give it the signature look.
+   Components apply these properties themselves, but this utility
+   is exported for consumers who want to glass-ify their own nodes. */
+.gl-glass {
+  position: relative;
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  color: var(--gl-text-on-glass);
+}
+
+/* Graceful fallback where backdrop-filter is unsupported:
+   fall back to a more opaque solid so content stays readable. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .gl-glass {
+    background: rgba(255, 255, 255, 0.85);
+  }
+  [data-theme='dark'] .gl-glass,
+  .gl-dark .gl-glass {
+    background: rgba(28, 28, 36, 0.92);
+  }
+}
+
+/* ---- Shared box-sizing + font for all Glasswind nodes ---- */
+[class^='gl-'],
+[class*=' gl-'] {
+  box-sizing: border-box;
+}
+
+/* ---- Accessible focus ring used across interactive components ---- */
+.gl-focus-ring:focus-visible,
+.gl-focusable:focus-visible {
+  outline: none;
+  box-shadow: var(--gl-ring);
+}
+
+/* ---- Visually-hidden helper (screen-reader-only labels) ---- */
+.gl-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Shared keyframes — only transform & opacity are animated,
+   so everything stays on the GPU compositor (no layout thrash,
+   no jank).
+   ============================================================ */
+@keyframes gl-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes gl-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes gl-scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes gl-scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.94); }
+}
+@keyframes gl-slide-up {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes gl-slide-down {
+  from { opacity: 0; transform: translate3d(0, -12px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes gl-slide-in-right {
+  from { transform: translate3d(100%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+@keyframes gl-slide-in-left {
+  from { transform: translate3d(-100%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+@keyframes gl-slide-in-top {
+  from { transform: translate3d(0, -100%, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+@keyframes gl-slide-in-bottom {
+  from { transform: translate3d(0, 100%, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+@keyframes gl-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes gl-toast-in {
+  from { opacity: 0; transform: translate3d(0, 16px, 0) scale(0.96); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes gl-indeterminate {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+@keyframes gl-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ============================================================
+   Respect users who prefer reduced motion — kill animations
+   and transitions on Glasswind nodes only.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  [class^='gl-'],
+  [class*=' gl-'] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

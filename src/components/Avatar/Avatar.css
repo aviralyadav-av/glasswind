@@ -1,0 +1,132 @@
+/* ===== Avatar ===== */
+.gl-avatar {
+  --_avatar-size: 36px;
+  --_avatar-fs: var(--gl-fs-sm);
+
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--_avatar-size);
+  height: var(--_avatar-size);
+  font-family: var(--gl-font);
+  font-size: var(--_avatar-fs);
+  font-weight: var(--gl-fw-bold);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+  user-select: none;
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-full);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+}
+
+/* Rim sheen — sits above the image to preserve the glass look */
+.gl-avatar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ---- Shapes ---- */
+.gl-avatar--circle {
+  border-radius: var(--gl-radius-full);
+}
+.gl-avatar--square {
+  border-radius: var(--gl-radius);
+}
+
+/* ---- Sizes ---- */
+.gl-avatar--sm {
+  --_avatar-size: 28px;
+  --_avatar-fs: var(--gl-fs-xs);
+}
+.gl-avatar--md {
+  --_avatar-size: 36px;
+  --_avatar-fs: var(--gl-fs-sm);
+}
+.gl-avatar--lg {
+  --_avatar-size: 48px;
+  --_avatar-fs: var(--gl-fs);
+}
+.gl-avatar--xl {
+  --_avatar-size: 64px;
+  --_avatar-fs: var(--gl-fs-lg);
+}
+
+/* ---- Content ---- */
+.gl-avatar__img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  animation: gl-fade-in var(--gl-dur) var(--gl-ease);
+}
+
+.gl-avatar__initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.gl-avatar__icon {
+  width: 62%;
+  height: 62%;
+  color: var(--gl-text-muted);
+}
+
+/* ---- Presence status dot ---- */
+.gl-avatar__status {
+  position: absolute;
+  right: 6%;
+  bottom: 6%;
+  z-index: 3;
+  width: 28%;
+  height: 28%;
+  min-width: 8px;
+  min-height: 8px;
+  border: 2px solid var(--gl-border-strong);
+  border-radius: var(--gl-radius-full);
+  box-shadow: var(--gl-shadow);
+  animation: gl-scale-in var(--gl-dur) var(--gl-ease-spring);
+}
+
+/* Nudge the dot onto the corner for square avatars */
+.gl-avatar--square .gl-avatar__status {
+  right: -3px;
+  bottom: -3px;
+}
+
+.gl-avatar__status--online {
+  background: var(--gl-success);
+}
+.gl-avatar__status--offline {
+  background: var(--gl-text-faint);
+}
+.gl-avatar__status--busy {
+  background: var(--gl-danger);
+}
+.gl-avatar__status--away {
+  background: var(--gl-warning);
+}

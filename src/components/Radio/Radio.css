@@ -1,0 +1,121 @@
+/* ===== Radio & RadioGroup ===== */
+.gl-radio-group {
+  display: flex;
+  gap: var(--gl-space-3);
+}
+.gl-radio-group--vertical {
+  flex-direction: column;
+}
+.gl-radio-group--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gl-space-5);
+}
+
+/* ---- Option row ---- */
+.gl-radio {
+  --_radio-size: var(--gl-space-5);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gl-space-2);
+  font-family: var(--gl-font);
+  font-size: var(--gl-fs);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+  color: var(--gl-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ---- Glass dot ---- */
+.gl-radio__dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: var(--_radio-size);
+  height: var(--_radio-size);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-inner-glow);
+  transition:
+    transform var(--gl-dur-fast) var(--gl-ease),
+    background-color var(--gl-dur) var(--gl-ease),
+    border-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease);
+  will-change: transform;
+}
+
+/* Top-edge sheen — the highlight that sells the glass look */
+.gl-radio__dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ---- Inner selected mark ---- */
+.gl-radio__mark {
+  width: 50%;
+  height: 50%;
+  border-radius: var(--gl-radius-full);
+  background: var(--gl-primary);
+  transform: scale(0);
+  opacity: 0;
+  transition:
+    transform var(--gl-dur) var(--gl-ease-spring),
+    opacity var(--gl-dur-fast) var(--gl-ease);
+  will-change: transform;
+}
+
+/* ---- Label text ---- */
+.gl-radio__label {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---- Interaction ---- */
+.gl-radio:not(.gl-radio--disabled):hover .gl-radio__dot {
+  background: var(--gl-bg-hover);
+  border-color: var(--gl-border-strong);
+}
+.gl-radio:not(.gl-radio--disabled):active .gl-radio__dot {
+  transform: scale(0.92);
+}
+
+/* ---- Selected ---- */
+.gl-radio--checked .gl-radio__dot {
+  border-color: var(--gl-primary);
+  background: var(--gl-primary-soft);
+}
+.gl-radio--checked .gl-radio__mark {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ---- Focus ring on the dot (input is visually hidden) ---- */
+.gl-radio__input:focus-visible ~ .gl-radio__dot {
+  outline: none;
+  box-shadow: var(--gl-inner-glow), var(--gl-ring);
+}
+
+/* ---- Disabled ---- */
+.gl-radio--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

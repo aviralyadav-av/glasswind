@@ -1,0 +1,109 @@
+/* ===== Badge ===== */
+.gl-badge {
+  /* Accent color used by the dot + colored variants (overridden per variant) */
+  --_badge-accent: var(--gl-text);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_badge-gap, var(--gl-space-2));
+  padding: var(--_badge-py, var(--gl-space-1)) var(--_badge-px, var(--gl-space-3));
+  font-family: var(--gl-font);
+  font-size: var(--_badge-fs, var(--gl-fs-sm));
+  font-weight: var(--gl-fw-bold);
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius-sm);
+  color: var(--gl-text-on-glass);
+}
+
+/* ---- Shape ---- */
+.gl-badge--pill {
+  border-radius: var(--gl-radius-full);
+}
+
+/* ---- Sizes ---- */
+.gl-badge--md {
+  --_badge-fs: var(--gl-fs-sm);
+  --_badge-px: var(--gl-space-3);
+  --_badge-py: var(--gl-space-1);
+  --_badge-gap: var(--gl-space-2);
+}
+.gl-badge--sm {
+  --_badge-fs: var(--gl-fs-xs);
+  --_badge-px: var(--gl-space-2);
+  --_badge-py: var(--gl-space-1);
+  --_badge-gap: var(--gl-space-1);
+}
+
+/* ---- Default glass variant ----
+   The frosted surface + top-edge sheen that sells the glass look. */
+.gl-badge--glass {
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+}
+.gl-badge--glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--gl-highlight), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ---- Colored variants ----
+   Soft token background + solid accent as the text/border color. */
+.gl-badge--primary,
+.gl-badge--success,
+.gl-badge--danger,
+.gl-badge--warning,
+.gl-badge--info {
+  color: var(--_badge-accent);
+  border-color: color-mix(in srgb, var(--_badge-accent) 40%, transparent);
+}
+
+.gl-badge--primary {
+  --_badge-accent: var(--gl-primary);
+  background: var(--gl-primary-soft);
+}
+.gl-badge--success {
+  --_badge-accent: var(--gl-success);
+  background: var(--gl-success-soft);
+}
+.gl-badge--danger {
+  --_badge-accent: var(--gl-danger);
+  background: var(--gl-danger-soft);
+}
+.gl-badge--warning {
+  --_badge-accent: var(--gl-warning);
+  background: var(--gl-warning-soft);
+}
+.gl-badge--info {
+  --_badge-accent: var(--gl-info);
+  background: var(--gl-info-soft);
+}
+
+/* ---- Sub-elements ---- */
+.gl-badge__dot {
+  flex: none;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: var(--gl-radius-full);
+  background: var(--_badge-accent);
+}
+
+.gl-badge__label {
+  display: inline-flex;
+  align-items: center;
+}

@@ -1,0 +1,35 @@
+/* ============================================================
+   Glasswind — Master stylesheet
+   Consumers import this ONCE at their app root:
+
+     import 'glasswind/styles.css';
+
+   tsup bundles this whole @import graph into a single
+   dist/styles.css at build time.
+   ============================================================ */
+
+/* Foundation (order matters: tokens first, then base) */
+@import './tokens.css';
+@import './base.css';
+
+/* ---- Component styles (alphabetical) ---- */
+@import '../components/Accordion/Accordion.css';
+@import '../components/Avatar/Avatar.css';
+@import '../components/Badge/Badge.css';
+@import '../components/Button/Button.css';
+@import '../components/Card/Card.css';
+@import '../components/Checkbox/Checkbox.css';
+@import '../components/Drawer/Drawer.css';
+@import '../components/Dropdown/Dropdown.css';
+@import '../components/Input/Input.css';
+@import '../components/Modal/Modal.css';
+@import '../components/Progress/Progress.css';
+@import '../components/Radio/Radio.css';
+@import '../components/Select/Select.css';
+@import '../components/Slider/Slider.css';
+@import '../components/Spinner/Spinner.css';
+@import '../components/Switch/Switch.css';
+@import '../components/Tabs/Tabs.css';
+@import '../components/Textarea/Textarea.css';
+@import '../components/Toast/Toast.css';
+@import '../components/Tooltip/Tooltip.css';

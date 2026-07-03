@@ -1,0 +1,189 @@
+/* ===== Button ===== */
+.gl-btn {
+  --_btn-h: var(--gl-control-h-md);
+  --_btn-px: var(--gl-space-5);
+  --_btn-fs: var(--gl-fs);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gl-space-2);
+  height: var(--_btn-h);
+  padding: 0 var(--_btn-px);
+  font-family: var(--gl-font);
+  font-size: var(--_btn-fs);
+  font-weight: var(--gl-fw-bold);
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius);
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  transition:
+    transform var(--gl-dur-fast) var(--gl-ease),
+    background-color var(--gl-dur) var(--gl-ease),
+    border-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease),
+    opacity var(--gl-dur) var(--gl-ease);
+  will-change: transform;
+}
+
+/* Top-edge sheen — the subtle highlight that sells the glass look */
+.gl-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    var(--gl-highlight),
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.gl-btn:hover {
+  background: var(--gl-bg-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--gl-shadow-lg), var(--gl-inner-glow);
+}
+.gl-btn:active {
+  transform: translateY(0) scale(0.97);
+  background: var(--gl-bg-active);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+}
+
+/* ---- Sizes ---- */
+.gl-btn--sm {
+  --_btn-h: var(--gl-control-h-sm);
+  --_btn-px: var(--gl-space-4);
+  --_btn-fs: var(--gl-fs-sm);
+  border-radius: var(--gl-radius-sm);
+}
+.gl-btn--lg {
+  --_btn-h: var(--gl-control-h-lg);
+  --_btn-px: var(--gl-space-6);
+  --_btn-fs: var(--gl-fs-lg);
+  border-radius: var(--gl-radius-lg);
+}
+
+/* ---- Variants ---- */
+.gl-btn--primary {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--gl-primary) 88%, white 12%),
+    var(--gl-primary)
+  );
+  border-color: color-mix(in srgb, var(--gl-primary) 70%, black 30%);
+  color: var(--gl-primary-contrast);
+}
+.gl-btn--primary:hover {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--gl-primary) 80%, white 20%),
+    var(--gl-primary-hover)
+  );
+}
+.gl-btn--primary:active {
+  background: var(--gl-primary-hover);
+}
+
+.gl-btn--secondary {
+  background: var(--gl-bg-subtle);
+  color: var(--gl-text);
+}
+
+.gl-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  color: var(--gl-text);
+}
+.gl-btn--ghost::before { display: none; }
+.gl-btn--ghost:hover {
+  background: var(--gl-bg-subtle);
+  box-shadow: none;
+}
+.gl-btn--ghost:active {
+  background: var(--gl-bg-hover);
+  box-shadow: none;
+}
+
+.gl-btn--danger {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--gl-danger) 88%, white 12%),
+    var(--gl-danger)
+  );
+  border-color: color-mix(in srgb, var(--gl-danger) 70%, black 30%);
+  color: #fff;
+}
+
+/* ---- States ---- */
+.gl-btn:disabled,
+.gl-btn[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+}
+
+.gl-btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.gl-btn--loading {
+  cursor: progress;
+  color: transparent !important;
+}
+.gl-btn--loading .gl-btn__label,
+.gl-btn--loading .gl-btn__icon {
+  opacity: 0;
+}
+
+/* ---- Sub-elements ---- */
+.gl-btn__label {
+  display: inline-flex;
+  align-items: center;
+}
+.gl-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+}
+
+.gl-btn__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.15em;
+  height: 1.15em;
+  margin: -0.575em 0 0 -0.575em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--gl-radius-full);
+  color: var(--gl-text);
+  animation: gl-spin 0.7s linear infinite;
+}
+.gl-btn--primary .gl-btn__spinner,
+.gl-btn--danger .gl-btn__spinner {
+  color: #fff;
+}

@@ -1,0 +1,130 @@
+/* ===== Select ===== */
+.gl-select {
+  --_sel-h: var(--gl-control-h-md);
+  --_sel-px: var(--gl-space-4);
+  --_sel-fs: var(--gl-fs);
+  --_sel-radius: var(--gl-radius);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  max-width: 100%;
+  font-family: var(--gl-font);
+  vertical-align: middle;
+}
+
+.gl-select--block {
+  display: flex;
+  width: 100%;
+}
+
+/* ---- The native field, stripped of its OS chrome ---- */
+.gl-select__field {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  height: var(--_sel-h);
+  margin: 0;
+  /* extra right padding leaves room for the custom chevron */
+  padding: 0 calc(var(--_sel-px) + 1.5em) 0 var(--_sel-px);
+  font-family: inherit;
+  font-size: var(--_sel-fs);
+  font-weight: var(--gl-fw);
+  line-height: 1;
+  color: var(--gl-text-on-glass);
+  cursor: pointer;
+  border: 1px solid var(--gl-border);
+  border-radius: var(--_sel-radius);
+  background: var(--gl-bg-subtle);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  box-shadow: var(--gl-inner-glow);
+  transition:
+    border-color var(--gl-dur) var(--gl-ease),
+    background-color var(--gl-dur) var(--gl-ease),
+    box-shadow var(--gl-dur) var(--gl-ease);
+}
+
+.gl-select__field:hover {
+  background: var(--gl-bg);
+  border-color: var(--gl-border-strong);
+}
+
+/* Kill the native focus outline — the wrapper renders the ring instead */
+.gl-select__field:focus {
+  outline: none;
+}
+
+/* ---- Custom chevron ---- */
+.gl-select__chevron {
+  position: absolute;
+  top: 50%;
+  right: var(--_sel-px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gl-text-muted);
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    transform var(--gl-dur) var(--gl-ease),
+    color var(--gl-dur) var(--gl-ease);
+}
+
+.gl-select__chevron svg {
+  display: block;
+}
+
+/* ---- Focus-within ring on the wrapper ---- */
+.gl-select:focus-within .gl-select__field {
+  border-color: var(--gl-border-strong);
+  box-shadow: var(--gl-inner-glow), var(--gl-ring);
+}
+
+.gl-select:focus-within .gl-select__chevron {
+  color: var(--gl-text);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* ---- Sizes ---- */
+.gl-select--md {
+  --_sel-h: var(--gl-control-h-md);
+  --_sel-px: var(--gl-space-4);
+  --_sel-fs: var(--gl-fs);
+  --_sel-radius: var(--gl-radius);
+}
+
+.gl-select--sm {
+  --_sel-h: var(--gl-control-h-sm);
+  --_sel-px: var(--gl-space-3);
+  --_sel-fs: var(--gl-fs-sm);
+  --_sel-radius: var(--gl-radius-sm);
+}
+
+.gl-select--lg {
+  --_sel-h: var(--gl-control-h-lg);
+  --_sel-px: var(--gl-space-5);
+  --_sel-fs: var(--gl-fs-lg);
+  --_sel-radius: var(--gl-radius-lg);
+}
+
+/* ---- Error state ---- */
+.gl-select--error .gl-select__field {
+  border-color: var(--gl-danger);
+}
+
+.gl-select--error.gl-select:focus-within .gl-select__field {
+  border-color: var(--gl-danger);
+  box-shadow: var(--gl-inner-glow), 0 0 0 3px var(--gl-danger-soft);
+}
+
+/* ---- Disabled state ---- */
+.gl-select--disabled {
+  opacity: 0.5;
+}
+
+.gl-select__field:disabled {
+  cursor: not-allowed;
+}

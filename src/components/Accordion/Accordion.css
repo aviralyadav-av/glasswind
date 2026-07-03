@@ -1,0 +1,129 @@
+/* ===== Accordion ===== */
+.gl-accordion {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--gl-font);
+  font-size: var(--gl-fs);
+  color: var(--gl-text-on-glass);
+  background: var(--gl-bg);
+  border: 1px solid var(--gl-border);
+  border-radius: var(--gl-radius);
+  box-shadow: var(--gl-shadow), var(--gl-inner-glow);
+  -webkit-backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+  backdrop-filter: blur(var(--gl-blur)) saturate(var(--gl-saturate));
+}
+
+/* ---- Item ---- */
+.gl-accordion__item + .gl-accordion__item {
+  border-top: 1px solid var(--gl-border);
+}
+
+.gl-accordion__item--disabled {
+  opacity: 0.55;
+}
+
+/* ---- Header ---- */
+.gl-accordion__header {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+/* ---- Trigger ---- */
+.gl-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gl-space-3);
+  width: 100%;
+  margin: 0;
+  padding: var(--gl-space-4) var(--gl-space-5);
+  font-family: inherit;
+  font-size: var(--gl-fs);
+  font-weight: var(--gl-fw-bold);
+  line-height: var(--gl-lh);
+  text-align: left;
+  color: var(--gl-text-on-glass);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--gl-dur) var(--gl-ease),
+    color var(--gl-dur) var(--gl-ease);
+}
+
+.gl-accordion__trigger:hover {
+  background: var(--gl-bg-hover);
+}
+
+.gl-accordion__trigger:active {
+  background: var(--gl-bg-active);
+}
+
+/* Inset focus ring so it is never clipped by the container's overflow. */
+.gl-accordion__trigger:focus-visible {
+  outline: none;
+  box-shadow: inset var(--gl-ring);
+}
+
+.gl-accordion__trigger:disabled {
+  cursor: not-allowed;
+}
+
+.gl-accordion__title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ---- Chevron ---- */
+.gl-accordion__chevron {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15em;
+  color: var(--gl-text-muted);
+  transition: transform var(--gl-dur) var(--gl-ease);
+  will-change: transform;
+}
+
+.gl-accordion__trigger[aria-expanded='true'] .gl-accordion__chevron {
+  transform: rotate(180deg);
+}
+
+/* ---- Panel: animate open/close via grid-template-rows 0fr -> 1fr ---- */
+.gl-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--gl-dur) var(--gl-ease);
+}
+
+.gl-accordion__panel[data-state='open'] {
+  grid-template-rows: 1fr;
+}
+
+/* Overflow wrapper — clips content while the grid row collapses to 0fr.
+   `visibility` is delayed until the collapse finishes so collapsed content
+   is removed from the tab order and the accessibility tree. */
+.gl-accordion__content {
+  overflow: hidden;
+  min-height: 0;
+  visibility: hidden;
+  transition: visibility 0s linear var(--gl-dur);
+}
+
+.gl-accordion__panel[data-state='open'] .gl-accordion__content {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Padding lives on an inner element so the outer row can collapse to a true 0. */
+.gl-accordion__body {
+  padding: 0 var(--gl-space-5) var(--gl-space-5);
+  color: var(--gl-text-muted);
+  font-weight: var(--gl-fw);
+  line-height: var(--gl-lh);
+}
