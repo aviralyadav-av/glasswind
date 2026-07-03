@@ -21,10 +21,21 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 
-# Env
+# Env & secrets — NEVER commit these
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+.npmrc
+.yarnrc
+*.pem
+*.key
+*.p12
+*.pfx
+*.cert
+secrets/
+**/secrets.*
+*.local.json
+credentials*.json
 
 # Cache
 .cache/
@@ -33,3 +44,6 @@ Thumbs.db
 
 # Vite
 playground/dist/
+
+# Private docs — kept local only, not published to the public repo
+docs/

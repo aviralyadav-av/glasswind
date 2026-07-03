@@ -90,7 +90,7 @@ Glasswind is driven entirely by CSS variables. Override any of them on `:root` (
 <html data-theme="dark">
 ```
 
-See [`docs/DESIGN.md`](docs/DESIGN.md) for the full token reference.
+Every theme token is a CSS variable prefixed `--gl-` — override any of them to restyle the whole library.
 
 ## 🧩 Components
 
@@ -98,7 +98,7 @@ Buttons · Inputs · Textarea · Select · Checkbox · Radio · Switch · Slider
 Card · Badge · Avatar · Accordion · Tabs · Progress · Spinner ·
 Modal · Drawer · Dropdown · Tooltip · Toast — and growing.
 
-Full props & examples: [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
+Every component is written in TypeScript and ships full type definitions, so your editor's autocomplete surfaces all props, variants, and sizes as you type.
 
 ## 🛠️ Local development
 
@@ -110,10 +110,6 @@ npm run typecheck  # type-check without emitting
 ```
 
 The **playground** (`playground/`) renders every component over an animated gradient so you can see the glass effect while you build.
-
-## 📦 Publishing & hosting
-
-Step-by-step guide to push to **GitHub**, publish to **npm**, and host the docs site on **Vercel**: [`docs/PUBLISHING.md`](docs/PUBLISHING.md).
 
 ## 📄 License
 

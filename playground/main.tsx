@@ -118,7 +118,7 @@ function Showcase() {
         <Badge variant="danger">Error</Badge>
         <Badge variant="warning">Warning</Badge>
         <Badge variant="info">Info</Badge>
-        <Avatar name="Shweta Gupta" status="online" />
+        <Avatar name="Ada Lovelace" status="online" />
         <Avatar name="John Doe" shape="square" status="busy" />
         <Avatar src="https://invalid.example/x.png" name="Fallback User" />
       </Section>
