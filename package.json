@@ -16,15 +16,15 @@
     "component-library",
     "tailwind-alternative"
   ],
-  "author": "",
+"author": "Aviral Yadav",
   "license": "MIT",
-  "homepage": "https://github.com/your-username/glasswind#readme",
+  "homepage": "https://github.com/aviralyadav-av/glasswind.git#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/glasswind.git"
+  "url": "git+https://github.com/aviralyadav-av/glasswind.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/glasswind/issues"
+    "url": "https://github.com/aviralyadav-av/glasswind/issues"
   },
   "type": "module",
   "main": "./dist/index.cjs",
