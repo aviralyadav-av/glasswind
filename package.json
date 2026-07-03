@@ -1,6 +1,6 @@
 {
   "name": "glasswind",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Glasswind — a glassmorphism React component library. Beautiful frosted-glass UI components with smooth, GPU-accelerated animations for React & Next.js.",
   "keywords": [
     "glasswind",
@@ -16,12 +16,12 @@
     "component-library",
     "tailwind-alternative"
   ],
-"author": "Aviral Yadav",
+  "author": "Aviral Yadav",
   "license": "MIT",
   "homepage": "https://github.com/aviralyadav-av/glasswind.git#readme",
   "repository": {
     "type": "git",
-  "url": "git+https://github.com/aviralyadav-av/glasswind.git"
+    "url": "git+https://github.com/aviralyadav-av/glasswind.git"
   },
   "bugs": {
     "url": "https://github.com/aviralyadav-av/glasswind/issues"
